@@ -1,7 +1,24 @@
-document.getElementById("_2-2").setAttribute("style", "background-color:red");
 // document.getElementById("_2-2").style.backgroundColor("red");
-console.log("hello");
 
+function dropToken(playerNumber, selectedColumn, selectedRow) {
+  if (playerNumber == 1) {
+    document
+      .getElementById(`_${selectedColumn}-${selectedRow}`)
+      .setAttribute(
+        "style",
+        `background-color:${players.player1.preferredColor}`
+      );
+  } else if (playerNumber == 2) {
+    document
+      .getElementById(`_${selectedColumn}-${selectedRow}`)
+      .setAttribute(
+        "style",
+        `background-color:${players.player2.preferredColor}`
+      );
+  }
+}
+
+dropToken(1, 5, 5);
 // // ? Grab all the references to the DOM elements
 // const dropZone = document.querySelector('#dropZone');
 // // const btnTokenImage = document.querySelector('#useTokenImage');
