@@ -54,3 +54,26 @@
 
 
 
+
+
+
+// This is when we used empty arrays for the grid rather than populating them with empty strings
+
+
+
+// // Check if the selected location is valid (not full)
+// let validMove = false;
+// if (gameBoard[selectedColumn].length < 6) {
+//     // Update the game board with the player's move (drop to the lowest Y-value in that X-value)
+//     validMove = true;
+//     gameBoard[selectedColumn].push(playerNumber)
+//     console.log("Valid move");
+//     console.log(selectedColumn,gameBoard[selectedColumn].length);
+// } else {
+//     //If the Y column is full, the player must select a different column
+//     console.log("Column is full, select a different column");
+//     console.log(gameBoard);
+// }
+
+
+
