@@ -30,10 +30,10 @@ var players = {
 // console.log(players);
 
 // Find out the player name
-let playerName = prompt("What is your name?");
-if (playerName === "") {
-  displayMessage("Please enter a name to play");
-}
+// let playerName = prompt("What is your name?");
+// if (playerName === "") {
+//   displayMessage("Please enter a name to play");
+// }
 
 // Determined whether that player is in the players object, and if so, which position they are in
 
