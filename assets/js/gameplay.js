@@ -4,11 +4,14 @@
 
 
 let playerNumber = 1;
+let gameWon = false;
 
 // Define the number of columns and rows in the game (allows for gameboard to be a dynamic size if wanted in the future)
 const xColumns = 7; // 7 columns
 const yRows = 6; // 6 rows
 const straightForWin = 4; // 4 tokens in a row to win
+const randomStartTokensMin = 15; // Minimum of random number of tokens to start
+const randomStartTokensMax = 25; // Maximum of random number of tokens to start
 
 // false represents an empty space, true represents a player's game piece
 let gameBoard = clearGameBoard(xColumns, yRows);
@@ -42,14 +45,17 @@ function clearGameBoard(xColumns, yRows) {
 // Create a gameboard with a random number of tokens played
 randomStart();
 function randomStart() {
-    let randomStartTokens = Math.floor(Math.random() * 12) + 1;
+    let randomStartTokens = Math.floor(Math.random() * randomStartTokensMax) + randomStartTokensMin;
     console.log("Random start tokens", randomStartTokens);
-    let playerNumber = 1;
+    playerNumber = 1;
     for (let randomToken = 0; randomToken < randomStartTokens; randomToken++) {
         let selectedColumn = Math.floor(Math.random() * xColumns);
-        console.log("selectedColumn", selectedColumn);
+        // console.log("selectedColumn", selectedColumn);
         // let randomY = Math.floor(Math.random() * yRows);
         checkValidMove(selectedColumn);
+        if (gameWon === true) {
+            break; 
+        }
     }
     console.log("Random start", gameBoard);
 }
@@ -66,7 +72,7 @@ function checkValidMove(selectedColumn) {
             console.log("Player", playerNumber, "placed token in: column", selectedColumn, "row", rowNumber);
             consoleLogGameBoard();
             dropToken(playerNumber,selectedColumn,rowNumber);
-            checkForWin(selectedColumn, rowNumber);
+            checkForWin(playerNumber,selectedColumn, rowNumber);
             togglePlayer();
             break;
         }
@@ -74,30 +80,85 @@ function checkValidMove(selectedColumn) {
     if (!validMove) {
         // If the Y column is full, the player must select a different column
         console.log("Column is full, select a different column");
-
-        // console.log([0, 0, 0,].join(' '))
     }
     // return validMove;
-
 }   
 
 function consoleLogGameBoard() {
+    // console.log([0, 0, 0,].join(' '))
     console.log(JSON.parse(JSON.stringify(gameBoard)));
 }
 
 // Check if the player has won the game
-function checkForWin(selectedColumn, rowNumber) {
+function checkForWin(playerNumber,selectedColumn, rowNumber) {
+    let winCondition = (playerNumber+"").repeat(straightForWin);
+    // console.log("winCondition", winCondition);
+
     // Check for horizonal win
-    let horizontalString = gameBoard[selectedColumn].join('');
+    let horizontalString = "";
+    for (let numberOfColumns = 0; numberOfColumns < xColumns; numberOfColumns++) {
+        horizontalString += gameBoard[numberOfColumns][rowNumber];
+    }
+    console.log("horizontalString", horizontalString);
+    if (horizontalString.includes(winCondition)) {
+        gameWon = true;
+        winCondition = "Player " + playerNumber + " wins with a horizonal win in row number " + rowNumber + "! Press OK to reset the game.";
+    }
 
     // Check for vertical win
-    let verticalString = gameBoard[rowNumber].join('');
+    let verticalString = gameBoard[selectedColumn].join('');
+    console.log("verticalString", verticalString);
+    if (verticalString.includes(winCondition)) {
+        gameWon = true;
+        winCondition = "Player " + playerNumber + " wins with a vertical win in columns number " + selectedColumn + "! Press OK to reset the game.";
+    }
 
     // Check for diagonal win (up right)
+    let diagonalStringUR = "";
+    let spacesToGrab = Math.min(yRows,xColumns-selectedColumn); // number of spaces available to grab in the diagonal direction
+    console.log("spacesToGrab", spacesToGrab);
+    let startX = 0;
+    let startY = 0;
+    // if ()
+
+    for (let i = 0; i < spacesToGrab; i++) {
+        if (selectedColumn >= rowNumber) {
+            diagonalStringUR += gameBoard[selectedColumn-rowNumber+i][i];
+        } else {
+            diagonalStringUR += gameBoard[i][rowNumber-selectedColumn+i];
+        }
+    }
+    console.log("diagonalStringUR",diagonalStringUR)
+    if (diagonalStringUR.includes(winCondition)) {
+        gameWon = true;
+        winCondition = "diagonal (up to the right)";
+    }
 
 
     // Check for diagonal win (up left)
+    // let diagonalStringUL = "";
+    // for (let i = 0; i < Math.min(yRows,xColumns-selectedColumn+rowNumber); i++) {
+    //     if (selectedColumn >= rowNumber) {
+    //         diagonalStringUL += gameBoard[selectedColumn-rowNumber+i][i];
+    //     } else {
+    //         diagonalStringUL += gameBoard[i][rowNumber-selectedColumn+i];
+    //     }
+    // }
+    // console.log("diagonalStringUL",diagonalStringUL)
+    // if (diagonalStringUL.includes(winCondition)) {
+    //     gameWon = true;
+    //     winCondition = "diagonal (up to the left)";
+    // }
+
+
+    if (gameWon === true) {
+        console.log("Player", playerNumber, "wins with a", winCondition, "win!");
+        alert(winCondition);
+        return gameWon;
+    }
+
 }
+
 
 // Flip to the alternate player
 function togglePlayer() {
@@ -107,5 +168,15 @@ function togglePlayer() {
         playerNumber = 1;
     }
 }
+
+
+
+
+
+
+
+
+
+
 
 
