@@ -1,4 +1,27 @@
-// document.getElementById("_2-2").style.backgroundColor("red");
+const gameboardObject = document.querySelector("#gameboard");
+playerNumber = 1;
+let droppedColumn = 0;
+let droppedRow = 0;
+
+// set all game token slots to white
+function clearGameboard() {
+  for (let columnIndex = 0; columnIndex < 7; columnIndex++) {
+    for (let rowIndex = 0; rowIndex < 6; rowIndex++) {
+      document
+        .getElementById(`_${columnIndex}-${rowIndex}`)
+        .setAttribute("style", `background-color:white`);
+    }
+  }
+}
+
+// check for token slot to be clicked
+gameboardObject.addEventListener("click", function () {
+  // parse clicked row and column from selector ID
+  droppedColumn = event.target.id.slice(1, 2);
+  droppedRow = event.target.id.slice(3, 4);
+  dropToken(playerNumber, droppedColumn, droppedRow);
+  togglePlayer();
+});
 
 function dropToken(playerNumber, selectedColumn, selectedRow) {
   if (playerNumber == 1) {
@@ -17,8 +40,15 @@ function dropToken(playerNumber, selectedColumn, selectedRow) {
       );
   }
 }
-
-dropToken(1, 5, 5);
+// Flip to the alternate player
+function togglePlayer() {
+  if (playerNumber == 1) {
+    playerNumber = 2;
+  } else {
+    playerNumber = 1;
+  }
+}
+clearGameboard();
 // // ? Grab all the references to the DOM elements
 // const dropZone = document.querySelector('#dropZone');
 // // const btnTokenImage = document.querySelector('#useTokenImage');
