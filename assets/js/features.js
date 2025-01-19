@@ -21,7 +21,7 @@ var players = {
     ties: 0,
     quits: 0,
     saveState: "",
-    preferredColor: "blue",
+    preferredColor: "black",
     firstTurn: false,
     gamepieceImage: "url",
   },
