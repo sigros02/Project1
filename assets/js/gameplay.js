@@ -19,8 +19,8 @@ const randomStartTokensMax = 25; // Maximum of random number of tokens to start
 
 // false represents an empty space, true represents a player's game piece
 let gameBoard = clearGameBoard(xColumns, yRows);
-console.log("gameBoard init");
-consoleLogGameBoard();
+// console.log("gameBoard init");
+// consoleLogGameBoard();
 // clearGameBoard();
 
 // Create a 2D array to represent the game board of size xColumns by yRows
@@ -114,14 +114,14 @@ function checkValidMove(selectedColumn) {
       // Update the game board with the player's move (drop to the lowest Y-value in that X-value)
       validMove = true;
       gameBoard[selectedColumn][rowNumber] = playerNumber;
-      console.log(
-        "Player",
-        playerNumber,
-        "placed token in: column",
-        selectedColumn,
-        "row",
-        rowNumber
-      );
+      //   console.log(
+      //     "Player",
+      //     playerNumber,
+      //     "placed token in: column",
+      //     selectedColumn,
+      //     "row",
+      //     rowNumber
+      //   );
       consoleLogGameBoard();
       dropToken(playerNumber, selectedColumn, rowNumber);
       checkForWin(playerNumber, selectedColumn, rowNumber);
@@ -138,20 +138,20 @@ function checkValidMove(selectedColumn) {
 
 function consoleLogGameBoard() {
   // console.log([0, 0, 0,].join(' '))
-  console.log(JSON.parse(JSON.stringify(gameBoard)));
+  //   console.log(JSON.parse(JSON.stringify(gameBoard)));
 }
 
 // Check if the player has won the game
 function checkForWin(playerNumber, selectedColumn, rowNumber) {
   let winCondition = (playerNumber + "").repeat(straightForWin);
-  // console.log("winCondition", winCondition);
+  console.log("winCondition", winCondition);
 
   // Check for horizonal win
   let horizontalString = "";
   for (let numberOfColumns = 0; numberOfColumns < xColumns; numberOfColumns++) {
     horizontalString += gameBoard[numberOfColumns][rowNumber];
   }
-  console.log("horizontalString", horizontalString);
+  //   console.log("horizontalString", horizontalString);
   if (horizontalString.includes(winCondition)) {
     gameWon = true;
     winCondition =
@@ -164,7 +164,7 @@ function checkForWin(playerNumber, selectedColumn, rowNumber) {
 
   // Check for vertical win
   let verticalString = gameBoard[selectedColumn].join("");
-  console.log("verticalString", verticalString);
+  //   console.log("verticalString", verticalString);
   if (verticalString.includes(winCondition)) {
     gameWon = true;
     winCondition =
@@ -175,6 +175,95 @@ function checkForWin(playerNumber, selectedColumn, rowNumber) {
       "! Press OK to reset the game.";
   }
 
+  //check for diagonal wins
+  //define primary diagonal (top left corner to bottom right corner) array
+  let primaryDiagonalArray = [gameBoard[selectedColumn][rowNumber]];
+  let currentRowIndex = rowNumber;
+  let currentColumnIndex = selectedColumn;
+  //while current row is less than last row
+  //AND
+  //current column is less last column
+  while (currentRowIndex < yRows - 1 && currentColumnIndex < xColumns - 1) {
+    //increment row and column indices
+    currentRowIndex++;
+    currentColumnIndex++;
+    //push current value into primary diagonal array
+    primaryDiagonalArray.push(gameBoard[currentColumnIndex][currentRowIndex]);
+  }
+
+  currentRowIndex = rowNumber;
+  currentColumnIndex = selectedColumn;
+  //while current row is greater than zero
+  //AND
+  //current column is greater zero
+  while (currentRowIndex > 0 && currentColumnIndex > 0) {
+    //decrement row and column indices
+    currentRowIndex--;
+    currentColumnIndex--;
+    //unshift current value into primary diagonal array
+    primaryDiagonalArray.push(gameBoard[currentColumnIndex][currentRowIndex]);
+    console.log("coordiantes: ", selectedColumn, ", ", rowNumber);
+    console.log("indices: ", currentColumnIndex, ", ", currentRowIndex);
+    //remove zero values from array
+    primaryDiagonalArray = primaryDiagonalArray.filter(
+      (element) => element !== 0
+    );
+    console.log("primary diagnoal: ", primaryDiagonalArray);
+  }
+
+  if (primaryDiagonalArray.join("").includes(winCondition)) {
+    gameWon = true;
+    winCondition =
+      "Player " +
+      playerNumber +
+      " wins with a primary diagonal win " +
+      rowNumber +
+      "! Press OK to reset the game.";
+  }
+  //define secondary diagonal (top right corner to bottom left corner) array
+  let secondaryDiagonalArray = [gameBoard[selectedColumn][rowNumber]];
+  currentRowIndex = rowNumber;
+  currentColumnIndex = selectedColumn;
+  //while current row is greater than zero
+  //AND
+  //current column is less last column
+  while (currentRowIndex > 0 && currentColumnIndex < xColumns - 1) {
+    //increment row and column indices
+    currentRowIndex--;
+    currentColumnIndex++;
+    //push current value into primary diagonal array
+    secondaryDiagonalArray.push(gameBoard[currentColumnIndex][currentRowIndex]);
+  }
+
+  currentRowIndex = rowNumber;
+  currentColumnIndex = selectedColumn;
+  //while current row is less than last row
+  //AND
+  //current column is greater than zero
+  while (currentRowIndex < yRows - 1 && currentColumnIndex > 0) {
+    //decrement row and column indices
+    currentRowIndex++;
+    currentColumnIndex--;
+    //unshift current value into primary diagonal array
+    secondaryDiagonalArray.push(gameBoard[currentColumnIndex][currentRowIndex]);
+    console.log("coordiantes: ", selectedColumn, ", ", rowNumber);
+    console.log("indices: ", currentColumnIndex, ", ", currentRowIndex);
+    //remove zero values from array
+    secondaryDiagonalArray = secondaryDiagonalArray.filter(
+      (element) => element !== 0
+    );
+    console.log("primary diagnoal: ", secondaryDiagonalArray);
+  }
+
+  if (secondaryDiagonalArray.join("").includes(winCondition)) {
+    gameWon = true;
+    winCondition =
+      "Player " +
+      playerNumber +
+      " wins with a secondary diagonal win " +
+      rowNumber +
+      "! Press OK to reset the game.";
+  }
   //   // Check for diagonal win (up right)
   //   let diagonalStringUR = "";
   //   let spacesToGrab = Math.min(yRows, xColumns - selectedColumn); // number of spaces available to grab in the diagonal direction
