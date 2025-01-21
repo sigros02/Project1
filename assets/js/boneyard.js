@@ -55,3 +55,49 @@
 
 
 
+// // randomPopulate()
+// function randomPopulate() {
+//     for (let columnIndex = 0; columnIndex < xColumns; columnIndex++) {
+//         for (let rowIndex = 0; rowIndex < yRows; rowIndex++) {
+//             gameBoard[columnIndex][rowIndex] = Math.floor(Math.random() * randomStartTokensMax);
+//         }
+//     }
+//     consoleLogGameBoard();
+//     selectedColumn = Math.floor(Math.random() * xColumns);
+//     rowNumber = Math.floor(Math.random() * yRows);
+//     console.log("Final Coordinates (", selectedColumn, ", ", rowNumber, ") : ", gameBoard[selectedColumn][rowNumber]);
+//     checkForWin(8,selectedColumn, rowNumber);
+// }
+
+
+// // Create a 2D array to represent the game board of size xColumns by yRows
+// function clearGameBoard(xColumns, yRows) {
+//     let newArray = [];
+//     // Jonathan's Original Code
+//     // for (let newRow = 0; newRow < xColumns; newRow++) {
+//     //     newArray[newRow] = new Array(yRows);
+//     // }
+//     // for (let newColumn = 0; newColumn < xColumns; newColumn++) {
+//     //         for (let newRow = 0; newRow < yRows; newRow++) {
+//     //             newArray[newColumn][newRow] = 0;
+//     //         }
+//     // }
+// }
+
+
+// // Create a gameboard with a random number of tokens played
+// // randomStart();
+// function randomStart() {
+//     let randomStartTokens = Math.floor(Math.random() * randomStartTokensMax) + randomStartTokensMin;
+//     console.log("Random start tokens", randomStartTokens);
+//     playerNumber = 1;
+//     for (let randomToken = 0; randomToken < randomStartTokens; randomToken++) {
+//         let selectedColumn = Math.floor(Math.random() * xColumns);
+//         checkValidMove(selectedColumn);
+//         if (gameWon === true) {
+//             break;
+//         }
+//     }
+//     console.log("Random start", gameBoard);
+// }
+// // Populates the entire gameboard with random numbers in each slot (for testing purposes)
