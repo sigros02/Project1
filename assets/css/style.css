@@ -61,7 +61,11 @@
     line-height: 1.5;
   }
   
-  #startGame {
+  #startGame, 
+  #homePage,
+  #start-game-button,
+  #reset-game-button {
+    margin: 20px;
     padding: 10px 20px;
     font-size: 18px;
     border: none;
@@ -72,6 +76,16 @@
     transition: background-color 0.3s ease;
   }
   
+.game-message {
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .col {
+    color: white;
+  }
+
   #startGame:hover {
     background-color: #45a049;
   }

@@ -29,16 +29,12 @@ var players = {
 
 // console.log(players);
 
-// Find out the player name
-// let playerName = prompt("What is your name?");
-// if (playerName === "") {
-//   displayMessage("Please enter a name to play");
-// }
+
 
 // Determined whether that player is in the players object, and if so, which position they are in
 
 // If the player is in the players object, load their data
-// let player1 = localStorage.getItem("players.player1.name");
+
 // let player2 = localStorage.getItem("players.player2.name");
 
 // If the player is not in the players object, add them to the players object via prompts
@@ -50,4 +46,4 @@ var players = {
 // Add player to the players object
 
 // Save player data to local storage
-localStorage.setItem("players.player1.name", players.player1.name);
+

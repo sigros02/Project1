@@ -6,6 +6,10 @@ let gameWon = false;
 
 // Define the gameboard element and currently selected row and column
 const gameboardElement = document.querySelector("#gameboard");
+const startGameButton = document.querySelector("#start-game-button");
+const resetGameButton = document.querySelector("#reset-game-button");
+const gameMessage = document.querySelector(".game-message");
+
 let selectedColumn = 0;
 let selectedRow = 0;
 
@@ -47,9 +51,11 @@ function consoleLogGameBoard() {
 
 // Determine which column was clicked
 function playerChooseColumn(event) {
-    // parse clicked row and column from selector ID
-    selectedColumn = event.target.id.slice(1, 2);
-    checkValidMove(selectedColumn);
+    if (!gameWon) {
+        // parse clicked row and column from selector ID
+        selectedColumn = event.target.id.slice(1, 2);
+        checkValidMove(selectedColumn);
+    }
 }
 
 // Check if the selected location is valid (not full)
@@ -63,7 +69,8 @@ function checkValidMove(selectedColumn) {
             gameBoard[selectedColumn][rowNumber] = playerNumber;
             // console.log("Player", playerNumber, "placed token in: column", selectedColumn, "row", rowNumber);
             dropToken(playerNumber, selectedColumn, rowNumber);
-            setTimeout(checkForWin(playerNumber, selectedColumn, rowNumber),2000);
+            // checkForWin(playerNumber, selectedColumn, rowNumber);
+            setTimeout(checkForWin, 100, playerNumber, selectedColumn, rowNumber);
             togglePlayer();
             break;
         }
@@ -80,17 +87,11 @@ function dropToken(playerNumber, selectedColumn, selectedRow) {
     if (playerNumber == 1) {
         document
         .getElementById(`_${selectedColumn}-${selectedRow}`)
-        .setAttribute(
-            "style",
-            `background-color:${players.player1.preferredColor}`
-        );
+        .setAttribute("style", `background-color:${players.player1.preferredColor}; color:${players.player1.preferredColor}`);
     } else if (playerNumber == 2) {
         document
         .getElementById(`_${selectedColumn}-${selectedRow}`)
-        .setAttribute(
-            "style",
-            `background-color:${players.player2.preferredColor}`
-        );
+        .setAttribute("style",`background-color:${players.player2.preferredColor}; color:${players.player2.preferredColor}`);
     }
     return true;
 }
@@ -186,10 +187,54 @@ function checkForWin(playerNumber, selectedColumn, rowNumber) {
 function togglePlayer() {
   if (playerNumber == 1) {
     playerNumber = 2;
+    gameMessage.textContent = `${players.player2.name}'s turn!`;
   } else {
     playerNumber = 1;
+    gameMessage.textContent = `${players.player1.name}'s turn!`;
   }
+  
 }
 
 // check for a gameboard click event
 gameboardElement.addEventListener("click", playerChooseColumn);
+startGameButton.addEventListener("click", startGame);
+resetGameButton.addEventListener("click", resetGame);
+
+function resetGame () {
+    if (confirm("Press OK to reset the game, or Cancel to continue playing") === true) {
+        playerNumber = 1;
+        gameWon = false;
+        gameBoard = clearGameBoard(xColumns, yRows);
+        if (confirm("Click OK to reset player information") === true) {
+            localStorage.clear();
+        }
+        gameMessage.textContent = "Ready for a new game!"
+    };
+}
+
+function startGame() {
+    definePlayerName();
+}
+
+// Find out the player names
+function definePlayerName() {
+    let player1 = localStorage.getItem("players.player1.name");
+    while (player1 === "" || player1 === null) {
+      player1 = prompt("Player 1: Please enter a name to play");
+      if (player1 === null) {
+        break;
+      }
+    }
+    players.player1.name = player1;
+    localStorage.setItem("players.player1.name", players.player1.name);
+    let player2 = localStorage.getItem("players.player2.name");
+    while (player2 === "" || player2 === null) {
+      player2 = prompt("Player 2: Please enter a name to play");
+      if (player2 === null) {
+        break;
+      }
+    }
+    players.player2.name = player2;
+    localStorage.setItem("players.player2.name", players.player2.name);
+    gameMessage.textContent = `Welcome ${players.player1.name} and ${players.player2.name}! ${players.player1.name} goes first!`;
+}
