@@ -19,8 +19,8 @@ const randomStartTokensMax = 25; // Maximum of random number of tokens to start
 
 // false represents an empty space, true represents a player's game piece
 let gameBoard = clearGameBoard(xColumns, yRows);
-// console.log("gameBoard init");
-// consoleLogGameBoard();
+console.log("gameBoard init");
+consoleLogGameBoard();
 // clearGameBoard();
 
 // Create a 2D array to represent the game board of size xColumns by yRows
@@ -44,8 +44,8 @@ function clearGameBoard(xColumns, yRows) {
     }
   }
   // set all gameboard token slots to white
-  for (let columnIndex = 0; columnIndex < 7; columnIndex++) {
-    for (let rowIndex = 0; rowIndex < 6; rowIndex++) {
+  for (let columnIndex = 0; columnIndex < xColumns; columnIndex++) {
+    for (let rowIndex = 0; rowIndex < yRows; rowIndex++) {
       document
         .getElementById(`_${columnIndex}-${rowIndex}`)
         .setAttribute("style", `background-color:white`);
@@ -89,222 +89,182 @@ function dropToken(playerNumber, selectedColumn, selectedRow) {
 
 // Create a gameboard with a random number of tokens played
 // randomStart();
-// function randomStart() {
-//     let randomStartTokens = Math.floor(Math.random() * randomStartTokensMax) + randomStartTokensMin;
-//     console.log("Random start tokens", randomStartTokens);
-//     playerNumber = 1;
-//     for (let randomToken = 0; randomToken < randomStartTokens; randomToken++) {
-//         let selectedColumn = Math.floor(Math.random() * xColumns);
-//         // console.log("selectedColumn", selectedColumn);
-//         // let randomY = Math.floor(Math.random() * yRows);
-//         checkValidMove(selectedColumn);
-//         if (gameWon === true) {
-//             break;
-//         }
-//     }
-//     console.log("Random start", gameBoard);
-// }
+function randomStart() {
+    let randomStartTokens = Math.floor(Math.random() * randomStartTokensMax) + randomStartTokensMin;
+    console.log("Random start tokens", randomStartTokens);
+    playerNumber = 1;
+    for (let randomToken = 0; randomToken < randomStartTokens; randomToken++) {
+        let selectedColumn = Math.floor(Math.random() * xColumns);
+        // console.log("selectedColumn", selectedColumn);
+        // let randomY = Math.floor(Math.random() * yRows);
+        checkValidMove(selectedColumn);
+        if (gameWon === true) {
+            break;
+        }
+    }
+    console.log("Random start", gameBoard);
+}
+// Populates the entire gameboard with random numbers in each slot (for testing purposes)
+randomPopulate()
+function randomPopulate() {
+    for (let columnIndex = 0; columnIndex < xColumns; columnIndex++) {
+        for (let rowIndex = 0; rowIndex < yRows; rowIndex++) {
+            gameBoard[columnIndex][rowIndex] = Math.floor(Math.random() * randomStartTokensMax);
+        }
+    }
+    consoleLogGameBoard();
+    selectedColumn = Math.floor(Math.random() * xColumns);
+    rowNumber = Math.floor(Math.random() * yRows);
+    console.log("Final Coordinates (", selectedColumn, ", ", rowNumber, ") : ", gameBoard[selectedColumn][rowNumber]);
+    checkForWin(8,selectedColumn, rowNumber);
+}
 
 // Check if the selected location is valid (not full)
 function checkValidMove(selectedColumn) {
-  // console.log("Selected column", selectedColumn);
-  let validMove = false;
-  for (let rowNumber = 0; rowNumber < yRows; rowNumber++) {
-    if (gameBoard[selectedColumn][rowNumber] === 0) {
-      // Update the game board with the player's move (drop to the lowest Y-value in that X-value)
-      validMove = true;
-      gameBoard[selectedColumn][rowNumber] = playerNumber;
-      //   console.log(
-      //     "Player",
-      //     playerNumber,
-      //     "placed token in: column",
-      //     selectedColumn,
-      //     "row",
-      //     rowNumber
-      //   );
-      consoleLogGameBoard();
-      dropToken(playerNumber, selectedColumn, rowNumber);
-      checkForWin(playerNumber, selectedColumn, rowNumber);
-      togglePlayer();
-      break;
+    // console.log("Selected column", selectedColumn);
+    let validMove = false;
+    for (let rowNumber = 0; rowNumber < yRows; rowNumber++) {
+        if (gameBoard[selectedColumn][rowNumber] === 0) {
+        // Update the game board with the player's move (drop to the lowest Y-value in that X-value)
+        validMove = true;
+        gameBoard[selectedColumn][rowNumber] = playerNumber;
+        console.log("Player", playerNumber, "placed token in: column", selectedColumn, "row", rowNumber);
+        dropToken(playerNumber, selectedColumn, rowNumber);
+        consoleLogGameBoard();
+        checkForWin(playerNumber, selectedColumn, rowNumber);
+        togglePlayer();
+        break;
+        }
     }
-  }
-  if (!validMove) {
-    // If the Y column is full, the player must select a different column
-    console.log("Column is full, select a different column");
-  }
-  // return validMove;
+    if (!validMove) {
+        // If the Y column is full, the player must select a different column
+        alert("Column is full, select a different column!");
+        console.log("Column is full, select a different column");
+    }
+    // return validMove;
 }
 
 function consoleLogGameBoard() {
-  // console.log([0, 0, 0,].join(' '))
-  //   console.log(JSON.parse(JSON.stringify(gameBoard)));
+    console.log(JSON.parse(JSON.stringify(gameBoard)));
 }
 
 // Check if the player has won the game
 function checkForWin(playerNumber, selectedColumn, rowNumber) {
-  let winCondition = (playerNumber + "").repeat(straightForWin);
-  console.log("winCondition", winCondition);
+    let winCondition = (playerNumber + "").repeat(straightForWin);
+    console.log("winCondition", winCondition);
 
-  // Check for horizonal win
-  let horizontalString = "";
-  for (let numberOfColumns = 0; numberOfColumns < xColumns; numberOfColumns++) {
-    horizontalString += gameBoard[numberOfColumns][rowNumber];
-  }
-  //   console.log("horizontalString", horizontalString);
-  if (horizontalString.includes(winCondition)) {
-    gameWon = true;
-    winCondition =
-      "Player " +
-      playerNumber +
-      " wins with a horizonal win in row number " +
-      rowNumber +
-      "! Press OK to reset the game.";
-  }
+    // Check for horizonal win
+    let horizontalString = "";
+    for (let numberOfColumns = 0; numberOfColumns < xColumns; numberOfColumns++) {
+        horizontalString += gameBoard[numberOfColumns][rowNumber];
+    }
+        console.log("horizontalString", horizontalString);
+    if (horizontalString.includes(winCondition)) {
+        gameWon = true;
+        winCondition = "Player " + playerNumber + " wins with a horizonal win in row number " + rowNumber + "! Press OK to reset the game.";
+    }
 
-  // Check for vertical win
-  let verticalString = gameBoard[selectedColumn].join("");
-  //   console.log("verticalString", verticalString);
-  if (verticalString.includes(winCondition)) {
-    gameWon = true;
-    winCondition =
-      "Player " +
-      playerNumber +
-      " wins with a vertical win in columns number " +
-      selectedColumn +
-      "! Press OK to reset the game.";
-  }
+    // Check for vertical win
+    let verticalString = gameBoard[selectedColumn].join("");
+    console.log("verticalString", verticalString);
+    if (verticalString.includes(winCondition)) {
+        gameWon = true;
+        winCondition = "Player " + playerNumber + " wins with a vertical win in columns number " + selectedColumn + "! Press OK to reset the game.";
+    }
 
-  //check for diagonal wins
-  //define primary diagonal (top left corner to bottom right corner) array
-  let primaryDiagonalArray = [gameBoard[selectedColumn][rowNumber]];
-  let currentRowIndex = rowNumber;
-  let currentColumnIndex = selectedColumn;
-  //while current row is less than last row
-  //AND
-  //current column is less last column
-  while (currentRowIndex < yRows - 1 && currentColumnIndex < xColumns - 1) {
-    //increment row and column indices
-    currentRowIndex++;
-    currentColumnIndex++;
-    //push current value into primary diagonal array
-    primaryDiagonalArray.push(gameBoard[currentColumnIndex][currentRowIndex]);
-  }
+    //check for diagonal wins
+    //define primary diagonal (up to the right) array
+    let primaryDiagonalArray = [gameBoard[selectedColumn][rowNumber]];
+    let rowIndexToAdd = rowNumber;
+    let columnIndexToAdd = selectedColumn;
+    //while current row is less than last row AND current column is less last column
+    while (rowIndexToAdd < yRows - 1 && columnIndexToAdd < xColumns - 1) {
+        //increment row and column indices
+        rowIndexToAdd++;
+        columnIndexToAdd++;
+        //push current value into primary diagonal array
+        primaryDiagonalArray.push(gameBoard[columnIndexToAdd][rowIndexToAdd]);
+    }
+    rowIndexToAdd = rowNumber;
+    columnIndexToAdd = selectedColumn;
+    //while current row is greater than zero AND current column is greater zero
+    while (rowIndexToAdd > 0 && columnIndexToAdd > 0) {
+        //decrement row and column indices
+        rowIndexToAdd--;
+        columnIndexToAdd--;
+        //unshift current value into primary diagonal array
+        primaryDiagonalArray.unshift(gameBoard[columnIndexToAdd][rowIndexToAdd]);
+        // console.log("coordinates: ", selectedColumn, ", ", rowNumber);
+        // console.log("indices: ", columnIndexToAdd, ", ", rowIndexToAdd);
+        console.log("primary diagonal: ", primaryDiagonalArray);
+    }
+    console.log("primary diagonal: ", primaryDiagonalArray);
 
-  currentRowIndex = rowNumber;
-  currentColumnIndex = selectedColumn;
-  //while current row is greater than zero
-  //AND
-  //current column is greater zero
-  while (currentRowIndex > 0 && currentColumnIndex > 0) {
-    //decrement row and column indices
-    currentRowIndex--;
-    currentColumnIndex--;
-    //unshift current value into primary diagonal array
-    primaryDiagonalArray.push(gameBoard[currentColumnIndex][currentRowIndex]);
-    console.log("coordiantes: ", selectedColumn, ", ", rowNumber);
-    console.log("indices: ", currentColumnIndex, ", ", currentRowIndex);
-    //remove zero values from array
-    primaryDiagonalArray = primaryDiagonalArray.filter(
-      (element) => element !== 0
-    );
-    console.log("primary diagnoal: ", primaryDiagonalArray);
-  }
+    if (primaryDiagonalArray.join("").includes(winCondition)) {
+        gameWon = true;
+        winCondition = "Player " + playerNumber + " wins with a primary diagonal win " + rowNumber + "! Press OK to reset the game.";
+    }
 
-  if (primaryDiagonalArray.join("").includes(winCondition)) {
-    gameWon = true;
-    winCondition =
-      "Player " +
-      playerNumber +
-      " wins with a primary diagonal win " +
-      rowNumber +
-      "! Press OK to reset the game.";
-  }
-  //define secondary diagonal (top right corner to bottom left corner) array
-  let secondaryDiagonalArray = [gameBoard[selectedColumn][rowNumber]];
-  currentRowIndex = rowNumber;
-  currentColumnIndex = selectedColumn;
-  //while current row is greater than zero
-  //AND
-  //current column is less last column
-  while (currentRowIndex > 0 && currentColumnIndex < xColumns - 1) {
-    //increment row and column indices
-    currentRowIndex--;
-    currentColumnIndex++;
-    //push current value into primary diagonal array
-    secondaryDiagonalArray.push(gameBoard[currentColumnIndex][currentRowIndex]);
-  }
+    //define secondary diagonal (up to the left) array
+    let secondaryDiagonalArray = [gameBoard[selectedColumn][rowNumber]];
+    rowIndexToAdd = rowNumber;
+    columnIndexToAdd = selectedColumn;
+    //while current row is greater than zero AND current column is less last column
+    while (rowIndexToAdd > 0 && columnIndexToAdd < xColumns - 1) {
+        //increment row and column indices
+        rowIndexToAdd--;
+        columnIndexToAdd++;
+        //push current value into primary diagonal array
+        secondaryDiagonalArray.push(gameBoard[columnIndexToAdd][rowIndexToAdd]);
+    }
+    rowIndexToAdd = rowNumber;
+    columnIndexToAdd = selectedColumn;
+    //while current row is less than last row AND current column is greater than zero
+    while (rowIndexToAdd < yRows - 1 && columnIndexToAdd > 0) {
+        //decrement row and column indices
+        rowIndexToAdd++;
+        columnIndexToAdd--;
+        //unshift current value into primary diagonal array
+        secondaryDiagonalArray.unshift(gameBoard[columnIndexToAdd][rowIndexToAdd]);
+        // console.log("coordiantes: ", selectedColumn, ", ", rowNumber);
+        // console.log("indices: ", columnIndexToAdd, ", ", rowIndexToAdd);
+        //remove zero values from array
+        console.log("secondary diagonal: ", secondaryDiagonalArray);
+    }
 
-  currentRowIndex = rowNumber;
-  currentColumnIndex = selectedColumn;
-  //while current row is less than last row
-  //AND
-  //current column is greater than zero
-  while (currentRowIndex < yRows - 1 && currentColumnIndex > 0) {
-    //decrement row and column indices
-    currentRowIndex++;
-    currentColumnIndex--;
-    //unshift current value into primary diagonal array
-    secondaryDiagonalArray.push(gameBoard[currentColumnIndex][currentRowIndex]);
-    console.log("coordiantes: ", selectedColumn, ", ", rowNumber);
-    console.log("indices: ", currentColumnIndex, ", ", currentRowIndex);
-    //remove zero values from array
-    secondaryDiagonalArray = secondaryDiagonalArray.filter(
-      (element) => element !== 0
-    );
-    console.log("primary diagnoal: ", secondaryDiagonalArray);
-  }
+    if (secondaryDiagonalArray.join("").includes(winCondition)) {
+        gameWon = true;
+        winCondition = "Player " + playerNumber + " wins with a secondary diagonal win " + rowNumber + "! Press OK to reset the game.";
+    }
 
-  if (secondaryDiagonalArray.join("").includes(winCondition)) {
-    gameWon = true;
-    winCondition =
-      "Player " +
-      playerNumber +
-      " wins with a secondary diagonal win " +
-      rowNumber +
-      "! Press OK to reset the game.";
-  }
-  //   // Check for diagonal win (up right)
-  //   let diagonalStringUR = "";
-  //   let spacesToGrab = Math.min(yRows, xColumns - selectedColumn); // number of spaces available to grab in the diagonal direction
-  //   console.log("spacesToGrab", spacesToGrab);
-  //   let startX = 0;
-  //   let startY = 0;
-  //   // if ()
+    //   // Check for diagonal win (up right)
+    //   let diagonalStringUR = "";
+    //   let spacesToGrab = Math.min(yRows, xColumns - selectedColumn); // number of spaces available to grab in the diagonal direction
+    //   console.log("spacesToGrab", spacesToGrab);
+    //   let startX = 0;
+    //   let startY = 0;
+    //   // if ()
 
-  //   for (let i = 0; i < spacesToGrab; i++) {
-  //     if (selectedColumn >= rowNumber) {
-  //       diagonalStringUR += gameBoard[selectedColumn - rowNumber + i][i];
-  //     } else {
-  //       diagonalStringUR += gameBoard[i][rowNumber - selectedColumn + i];
-  //     }
-  //   }
-  //   console.log("diagonalStringUR", diagonalStringUR);
-  //   if (diagonalStringUR.includes(winCondition)) {
-  //     gameWon = true;
-  //     winCondition = "diagonal (up to the right)";
-  //   }
+    //   for (let i = 0; i < spacesToGrab; i++) {
+    //     if (selectedColumn >= rowNumber) {
+    //       diagonalStringUR += gameBoard[selectedColumn - rowNumber + i][i];
+    //     } else {
+    //       diagonalStringUR += gameBoard[i][rowNumber - selectedColumn + i];
+    //     }
+    //   }
+    //   console.log("diagonalStringUR", diagonalStringUR);
+    //   if (diagonalStringUR.includes(winCondition)) {
+    //     gameWon = true;
+    //     winCondition = "diagonal (up to the right)";
+    //   }
 
-  // Check for diagonal win (up left)
-  // let diagonalStringUL = "";
-  // for (let i = 0; i < Math.min(yRows,xColumns-selectedColumn+rowNumber); i++) {
-  //     if (selectedColumn >= rowNumber) {
-  //         diagonalStringUL += gameBoard[selectedColumn-rowNumber+i][i];
-  //     } else {
-  //         diagonalStringUL += gameBoard[i][rowNumber-selectedColumn+i];
-  //     }
-  // }
-  // console.log("diagonalStringUL",diagonalStringUL)
-  // if (diagonalStringUL.includes(winCondition)) {
-  //     gameWon = true;
-  //     winCondition = "diagonal (up to the left)";
-  // }
+    // Check for diagonal win (up left)
 
-  if (gameWon === true) {
-    console.log("Player", playerNumber, "wins with a", winCondition, "win!");
-    alert(winCondition);
-    return gameWon;
-  }
+    if (gameWon === true) {
+        console.log("Player", playerNumber, "wins with a", winCondition, "win!");
+        alert(winCondition);
+        return gameWon;
+    }
 }
 
 // Flip to the alternate player
