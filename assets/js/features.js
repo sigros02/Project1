@@ -9,7 +9,7 @@ var players = {
     ties: 0,
     quits: 0,
     saveState: "",
-    preferredColor: "red",
+    preferredColor: "green",
     firstTurn: true,
     gamepieceImage: "url",
   },
@@ -27,23 +27,39 @@ var players = {
   },
 };
 
-// console.log(players);
+// Mouseover
+// const dropzoneEl = document.querySelector(".dropzone");
 
+// document.addEventListener("mousemove", (event) => {
+//   cursorHand.style.left = event.clientX + "px";
+//   cursorHand.style.top = event.clientY + "px";
+// });
 
+// let currentGamepiece = null;
 
-// Determined whether that player is in the players object, and if so, which position they are in
+// ? Remove event listeners for mouse move, so that the element is no longer draggable
+// document.removeEventListener("mousemove", mouseMoveHandler);
 
-// If the player is in the players object, load their data
+// const addImageBtn = document.querySelector('#add-image');
+// const imageUrlInput = document.querySelector('#image-url');
+// const addTextBtn = document.querySelector('#add-text');
+// const textInput = document.querySelector('#text-input');
+// const clearBtn = document.querySelector('#clear-all');
 
-// let player2 = localStorage.getItem("players.player2.name");
+// function handCursor() {
+//     const cursorURL = "https://cdn1.iconfinder.com/data/icons/touch-gestures-2/24/Flick-512.png";
+//     const cursorHand = document.createElement("img");
+//     cursorHand.id = "cursor-hand";
+//     cursorHand.style.position = "absolute";
+//     cursorHand.style.width = "15px";
+//     cursorHand.style.height = "15px";
+//     cursorHand.style.backgroundimage = "url('https://cdn1.iconfinder.com/data/icons/touch-gestures-2/24/Flick-512.png')";
+//     cursorHand.style.backgroundSize = "cover";
+//     cursorHand.style.pointerEvents = "none";
+//     cursorHand.src = cursorURL
+//     cursorHand.classList.add("dragable");
 
-// If the player is not in the players object, add them to the players object via prompts
+//     document.body.appendChild(cursorHand)
+// }
 
-// Repeat for Two Players
-
-// Query the Player(s) to enter their name(s)
-
-// Add player to the players object
-
-// Save player data to local storage
 

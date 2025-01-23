@@ -9,6 +9,7 @@
     text-align: center;
     background-color: #f7f7f7;
     color: #333;
+    cursor: url("https://cdn1.iconfinder.com/data/icons/touch-gestures-2/24/One-Finger-512.png"), auto;
   }
   
   .header {
@@ -64,6 +65,7 @@
   #startGame, 
   #homePage,
   #start-game-button,
+  #settings-game-button,
   #reset-game-button {
     margin: 20px;
     padding: 10px 20px;
@@ -76,7 +78,11 @@
     transition: background-color 0.3s ease;
   }
   
-.game-message {
+  .dropzone {
+    background-color: brown;
+  }
+
+  .game-message {
     font-size: 48px;
     font-weight: bold;
     text-align: center;
