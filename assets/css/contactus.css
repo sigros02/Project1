@@ -3,6 +3,7 @@ body {
     text-align: center;
     background-color: #f7f7f7;
     color: #333;
+    margin: 0px;
   }
 
 h1 {
@@ -47,7 +48,7 @@ div {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 1px 20px;
     background-color: #4CAF50;
     color: white;
     flex-direction: row;
