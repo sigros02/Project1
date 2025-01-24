@@ -2,7 +2,11 @@
 // It is responsible for the game logic, such as the player's location selection, win conditions, etc. It is also responsible for the game's UI, such as updating the game board, displaying messages, etc.
 
 let playerNumber = 1;
-let gameWon = false;
+let playerOneNumber = 0;
+let playerTwoNumber = 0;
+let activeGame = false; //whether a game is enabled and/or in session
+let gameWon = false; //whether a player has won the game
+
 // Define the gameboard element and currently selected row and column
 const gameboardElement = document.querySelector("#gameboard");
 const startGameButton = document.querySelector("#start-game-button");
@@ -50,7 +54,7 @@ function consoleLogGameBoard() {
 
 // Determine which column was clicked
 function playerChooseColumn(event) {
-  if (!gameWon) {
+  if (!gameWon && activeGame) {
     // parse clicked row and column from selector ID
     selectedColumn = event.target.id.slice(1, 2);
     checkValidMove(selectedColumn);
@@ -239,69 +243,76 @@ function resetGame() {
   }
 }
 
-function startGame() {
-  definePlayerName();
-}
-
-// Find out the player names
-function definePlayerName() {
-  let player1 = JSON.parse(localStorage.getItem("playerData"))[0].name;
-  while (player1 === "" || player1 === null) {
-    player1 = prompt("Player 1: Please enter a name to play");
-    if (player1 === null) {
-      break;
-    }
-  }
-  players.player1.name = player1;
-
-  // Determined whether that player is in the players object, and if so, which position they are in
-
-  // If the player is in the players object, load their data
-
-  // If the player is not in the players object, add them to the players object via prompts
-
-  localStorage.setItem("players.player1.name", players.player1.name);
-  let player2 = JSON.parse(localStorage.getItem("playerData"))[1].name;
-  while (player2 === "" || player2 === null) {
-    player2 = prompt("Player 2: Please enter a name to play");
-    if (player2 === null) {
-      break;
-    }
-  }
-  players.player2.name = player2;
-  localStorage.setItem("players.player2.name", players.player2.name);
-  gameMessage.textContent = `Welcome ${players.player1.name} and ${players.player2.name}! ${players.player1.name} goes first!`;
-}
-
+//Modal Stuff to define player names and colors and store/update local storage
+const startGameModal = document.getElementById("startGameModal");
+const nameInput1 = document.getElementById("nameInput1");
+const colorSelect1 = document.getElementById("colorSelect1");
+const nameInput2 = document.getElementById("nameInput2");
+const colorSelect2 = document.getElementById("colorSelect2");
 const submitButton = document.getElementById("submitButton");
 console.log(submitButton);
-const nameInput = document.getElementById("nameInput");
-const colorSelect = document.getElementById("colorSelect");
-const modal = document.getElementById("exampleModal");
+
 
 submitButton.addEventListener("click", () => {
-  console.log("SUBMITTED");
-  const name = nameInput.value.trim();
-  const color = colorSelect.value;
+  console.log("Submit button clicked");
+  const enteredName1 = nameInput1.value.trim();
+  const selectedColor1 = colorSelect1.value;
+  const enteredName2 = nameInput2.value.trim();
+  const selectedColor2 = colorSelect2.value;
 
-  if (!name || !color) {
-    alert("Please fill out both fields.");
+
+  if (!enteredName1 || !selectedColor1 || !enteredName2 || !selectedColor2) {
+    alert("Please fill out all fields!");
+    return;
+  } else if (enteredName1.toUpperCase() == enteredName2.toUpperCase()) {
+    alert("Please enter different names for each player!");
+    return;
+  } else if (selectedColor1 === selectedColor2) {
+    alert("Please choose different colors for each player!");
     return;
   }
 
-  // Save to local storage
-  const data = { name, color };
-  const storedData = JSON.parse(localStorage.getItem("playerData")) || [];
-  storedData.push(data);
-  localStorage.setItem("playerData", JSON.stringify(storedData));
+  // Determined whether that player is in the players object, and if so, which position they are in
+  for (let playerIndex = 0; playerIndex < players.length; playerIndex++) {
+    if (players[playerIndex].playerName.toUpperCase() == enteredName1.toUpperCase()) {
+      playerOneNumber = playerIndex
+      players[playerIndex].preferredColor = selectedColor1
+      players[playerIndex].turnNumber = 1;
+      break;
+    }
+    if (players[playerIndex].playerName.toUpperCase() == enteredName2.toUpperCase()) {
+      playerTwoNumber = playerIndex
+      players[playerIndex].preferredColor = selectedColor2
+      players[playerIndex].turnNumber = 2;
+      break;
+    }
+  }
+  // If the player is not in the players object, add them to the players object 
+  if (playerOneNumber === 0) {
+    players.push({ "playerName": enteredName1, "preferredColor": selectedColor1, "turnNumber": 1});
+    playerOneNumber = players.length - 1;
+  }
+  if (playerTwoNumber === 0) {
+    players.push({ "playerName": enteredName2, "preferredColor": selectedColor2, "turnNumber": 2});
+    playerTwoNumber = players.length - 1;
+  }
+  localStorage.setItem("playerData", JSON.stringify(players));
+  console.log("Players submit",players);
 
   // Clear form and close modal
-  nameInput.value = "";
-  colorSelect.value = "";
+  nameInput1.value = "";
+  colorSelect1.value = "";
+  nameInput2.value = "";
+  colorSelect2.value = "";
 
-  //   const modalInstance = new bootstrap.Modal("#exampleModal");
-  const modalInstance = bootstrap.Modal.getInstance("#exampleModal");
-  modalInstance.hide();
+  // const modalInstance = bootstrap.Modal.getInstance("#startGameModal");
+  // modalInstance.hide();
+  bootstrap.Modal.getInstance("#startGameModal").hide();
 
   startGame();
 });
+
+function startGame() {
+  activeGame = true;
+  gameMessage.textContent = `Welcome to Array of Sunshine, ${players[playerOneNumber].playerName} and ${players[playerTwoNumber].playerName}! ${players[playerOneNumber].playerName}, you go first!`;
+}

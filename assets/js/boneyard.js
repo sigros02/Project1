@@ -55,7 +55,30 @@
 
 
 
-
+// // Find out the player names
+// function definePlayerName() {
+//     let player1 = JSON.parse(localStorage.getItem("playerData"))[0].name;
+//     while (player1 === "" || player1 === null) {
+//       player1 = prompt("Player 1: Please enter a name to play");
+//       if (player1 === null) {
+//         break;
+//       }
+//     }
+//     players.player1.name = player1;
+  
+//     localStorage.setItem("players.player1.name", players.player1.name);
+//     let player2 = JSON.parse(localStorage.getItem("playerData"))[1].name;
+//     while (player2 === "" || player2 === null) {
+//       player2 = prompt("Player 2: Please enter a name to play");
+//       if (player2 === null) {
+//         break;
+//       }
+//     }
+//     players.player2.name = player2;
+//     localStorage.setItem("players.player2.name", players.player2.name);
+//     gameMessage.textContent = `Welcome ${players.player1.name} and ${players.player2.name}! ${players.player1.name} goes first!`;
+//   }
+  
 
 
 
