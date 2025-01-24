@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bona+Nova+SC:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Connect 4 - Project 1 Group 2</title>
   </head>
@@ -10,21 +14,26 @@
     <div class="header">
       <h1 class="title">Connect 4 - Project 1 Group 2</h1>
       <div class="buttons">
-        <a href="./assets/home.html"><button id="home">Home</button></a>
-        <a href="./assets/contact.html"><button id="contact">Contact Us</button></a>
-        <a href="./assets/about.html"><button id="us">About Us</button></a>
+        <a href="./home.html"><button id="home">Home</button></a>
+        <a href="./Contactus.html"><button id="contact">Contact Us</button></a>
+        <a href="./about.html"><button id="us">About Us</button></a>
       </div>
     </div>
     <hr />
     <div class="openPage">
-      <h2>Welcome to Connect 4!</h2>
-      <p>
+      <h2 class="animate__animated animate__lightSpeedInRight">Welcome to Connect 4!</h2>
+      <p class="bona-nova-sc-regular">
         Connect 4 is a classic two-player strategy game. Take turns dropping your
         colored discs into the columns of the grid. The first player to align
         four discs vertically, horizontally, or diagonally wins!
       </p>
-      <button id="startGame">Start Game</button>
+      <a href="./connect-four.html"><button id="startGame">Start Game</button></a>
     </div>
+    <div class="animation"></div><br>
+    <div class="animation2"></div><br>
+    <p class="bona-nova-sc-regular-italic" id="animatetext">Get ready for the challenge of your life!</p>
+    <div class="animation3"></div><br>
+    <div class="animation4"></div><br>
     <script>
       document.getElementById('startGame').onclick = () => {
         alert("The game will start soon!");

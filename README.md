@@ -1,18 +1,28 @@
 # Array of Sunshine
 
-A game where the object of the game is to connect four game tiles in a row, with each player alternating turns dropping a gamepiece into one of seven columns. A win can be four continguous tiles stacked vertically, horizontally, or diagonally.
-
-
-# <Your-Project-Title>
+A game where the object of the game is to connect four game tiles in a row, with each player alternating turns dropping a gamepiece into one of seven columns. A win can be four continguous tiles stacked vertically, horizontally, or diagonally. The architecture is designed to allow for matrices of different sizes and require a variable number of tokens "in a row" for a victory, but the defaults for all of them are a classic 7x6 matrix aiming for 4 in a row.
 
 ## Description
 
-Provide a short description explaining the what, why, and how of your project. Use the following questions as a guide:
+The motivation for this project was to create an application to utilized basic HTML, CSS, JavaScript, and Web API skills. Having a landing page allowed us to practice with different layouts and frameworks, introduce ourselves as nascent programmers, and demonstrate our coding capabilities, especially in JavaScript.
 
-- What was your motivation?
-- Why did you build this project? (Note: the answer is not "Because it was a homework assignment.")
-- What problem does it solve?
-- What did you learn?
+On the surface, a simple game of four-in-a-row seems like an easy exercise. However, there are still some interesting logical challenges required to make the game successful, especially around the Win Conditions. This game allowed us to practice the logic and syntax that we had learned in the program thus far.
+
+
+## Key Learnings
+- <b>Commit Often</b>. And push your changes! There is little to be gained by working independently on a file (or multiple files) with the aim to have a grand reveal and big "ta-da!" On the contrary, it can create frustration and duplicate work and even delay progress on functions that require integration across multiple files.
+
+- <b>Google is your friend</b>. With a basic understanding of the syntax and use of your respective languages, you can start to utilize code provided by others on Google to get an example of what you might be trying to achieve. You don't need to have an encyclopedic memory of all of the methods to be able to recall and use them!
+
+- <b>Learning #3</b>. And a short description of the Learning.
+
+- <b>Learning #4</b>. And a short description of the Learning.
+
+- <b>Learning #5</b>. And a short description of the Learning.
+
+
+
+
 
 ## Table of Contents (Optional)
 
@@ -29,21 +39,18 @@ What are the steps required to install your project? Provide a step-by-step desc
 
 ## Usage
 
-Provide instructions and examples for use. Include screenshots as needed.
+When you're ready to play, simply press the "Play Now" button on the homescreen, where you will be taken to the empty gameboard.
 
-To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
+Upon initial gameplay, the system will prompt your for the players' names, so that it can address each of you by name and help you understand 
 
-    ```md
-    ![alt text](assets/images/screenshot.png)
-    ```
 
 ## Credits
 
-List your collaborators, if any, with links to their GitHub profiles.
+The project's collaborators each have a bio written on the .\about.html page, which can be found by clicking About on the Home page (index.html)
 
-If you used any third-party assets that require attribution, list the creators with links to their primary web presence in this section.
 
-If you followed tutorials, include links to those here as well.
+
+
 
 ## License
 
@@ -53,15 +60,11 @@ The last section of a high-quality README file is the license. This lets other d
 
 🏆 The previous sections are the bare minimum, and your project will ultimately determine the content of this document. You might also want to consider adding the following sections.
 
-## Badges
-
-![badmath](https://img.shields.io/github/languages/top/lernantino/badmath)
-
-Badges aren't necessary, per se, but they demonstrate street cred. Badges let other developers know that you know what you're doing. Check out the badges hosted by [shields.io](https://shields.io/). You may not understand what they all represent now, but you will in time.
 
 ## Features
 
 If your project has a lot of features, list them here.
+
 
 ## How to Contribute
 

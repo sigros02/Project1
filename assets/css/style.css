@@ -9,7 +9,9 @@
     text-align: center;
     background-color: #f7f7f7;
     color: #333;
+    cursor: url("https://cdn1.iconfinder.com/data/icons/touch-gestures-2/24/One-Finger-512.png"), auto;
   }
+
   
   .header {
     display: flex;
@@ -57,11 +59,166 @@
   
   .openPage p {
     margin-bottom: 20px;
-    font-size: 18px;
+    font-size: 24px;
     line-height: 1.5;
   }
+
+  .bona-nova-sc-regular {
+    font-family: "Bona Nova SC", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
   
-  #startGame {
+  .bona-nova-sc-bold {
+    font-family: "Bona Nova SC", serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .bona-nova-sc-regular-italic {
+    font-family: "Bona Nova SC", serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+  
+  
+  /* animation classes and ids */
+
+  #animatetext {
+    font-size: 30px;
+    line-height: 1.5;
+    font-style: italic;
+    /* font-family: Impact, monospace, Arial, sans-serif; */
+    animation: grow 4s infinite;
+  }
+
+  @keyframes grow {
+    0% {
+      font-size: 30px;
+    }
+    50% {
+      font-size: 50px;
+      color: red;
+    }
+    100% {
+      font-size: 30px;
+      color: blue;
+    }
+  }
+  
+  .animation {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+    position: relative;
+    animation-name: sidetoside;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+  }
+
+  .animation2 {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    position: relative;
+    animation-name: sidetoside2;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+  }
+
+  .animation3 {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: green;
+    position: relative;
+    animation-name: sidetoside3;
+    animation-duration: 7s;
+    animation-iteration-count: infinite;
+  }
+
+  .animation4 {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: yellow;
+    position: relative;
+    animation-name: sidetoside4;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+  }
+
+  .animation5 {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: black;
+    position: relative;
+    animation-name: sidetoside5;
+    animation-duration: 8s;
+    animation-iteration-count: infinite;
+  }
+  
+  @keyframes sidetoside {
+    0% {
+      left: 0;
+    }
+    50% {
+      left: 96%;
+      background-color: green;
+    }
+    100% {
+      left: 0;
+    }
+  }
+  
+  @keyframes sidetoside2 {
+    0% {
+      left: 0;
+    }
+    50% {
+      left: 96%;
+      background-color: black;
+    }
+    100% {
+      left: 0;
+    }
+  }
+
+  @keyframes sidetoside3 {
+    0% {
+      left: 0;
+    }
+    50% {
+      left: 96%;
+      background-color: yellow;
+    }
+    100% {
+      left: 0;
+    }
+  }
+
+  @keyframes sidetoside4 {
+    0% {
+      left: 0;
+    }
+    50% {
+      left: 96%;
+      background-color: red;
+    }
+    100% {
+      left: 0;
+    }
+  }
+
+  #startGame, 
+  #homePage,
+  #start-game-button,
+  #settings-game-button,
+  #reset-game-button {
+    margin: 20px;
     padding: 10px 20px;
     font-size: 18px;
     border: none;
@@ -72,7 +229,22 @@
     transition: background-color 0.3s ease;
   }
   
+  .dropzone {
+    background-color: brown;
+  }
+
+  .game-message {
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .col {
+    color: white;
+  }
+
   #startGame:hover {
     background-color: #45a049;
   }
+
   
