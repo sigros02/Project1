@@ -253,7 +253,7 @@ let playerTwoColor = "";
 
 submitButton.addEventListener("click", () => {
   if (activeGame == true) {
-    clearGameBoard();
+    clearGameBoard;
   }
   playerOneName = nameInput1.value.trim();
   playerOneColor = colorSelect1.value;
