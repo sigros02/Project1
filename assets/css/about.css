@@ -3,9 +3,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    text-align: center;
   }
   
+  html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
 
   body {
     font-family: Arial, sans-serif;
@@ -23,6 +27,7 @@
     padding: 10px 20px;
     background-color: #4CAF50;
     color: white;
+    
   }
   
   .title {
