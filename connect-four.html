@@ -56,43 +56,104 @@
         position:relative;
         border: 10px solid #1417C4;
         border-radius: 10px;
-
-      }
-      .row {
-        background: linear-gradient(135deg, #1417C4 25%, #373deb 25%, #373deb 50%, #1417C4 50%, #1417C4 75%, #373deb 75%);
-        background-size: 20px 20px;      
       }
       .row > * {
         aspect-ratio: 1/1;
-        border: 2px solid blue;
+        /* border: 2px solid;
         border-radius: 50% 50% 50% 50%;
-        margin: 1%;
-        
+        margin: 1%; */
+      }
+      #gameboard .col {
+        /* background-color: blue; */
+        /* background: linear-gradient(135deg, #1417C4 25%, #373deb 25%, #373deb 50%, #1417C4 50%, #1417C4 75%, #373deb 75%); */
+        /* background-size: 20px 20px;  */
+        /* clip-path: circle(50px at 50% 50%); */
+        background: radial-gradient(circle at center, transparent 58%, blue 50%);
       }
       #left-leg {
-      /* https://css-tricks.com/the-shapes-of-css/ */
-      border-bottom: 100px solid #1417C4;
-      border-left: 25px solid transparent;
-      border-right: 25px solid transparent;
-      height: 0;
-      width: 100px;
-      position: absolute;
-      right: -32px;
-    }
+        /* https://css-tricks.com/the-shapes-of-css/ */
+        border-bottom: 100px solid #1417C4;
+        border-left: 25px solid transparent;
+        border-right: 25px solid transparent;
+        height: 0;
+        width: 100px;
+        position: absolute;
+        right: -32px;
+      }
       #right-leg {
-      /* https://css-tricks.com/the-shapes-of-css/ */
-      border-bottom: 100px solid #1417C4;
-      border-left: 25px solid transparent;
-      border-right: 25px solid transparent;
-      height: 0;
-      width: 100px;
-      position: absolute;
-      left: -32px;
+        /* https://css-tricks.com/the-shapes-of-css/ */
+        border-bottom: 100px solid #1417C4;
+        border-left: 25px solid transparent;
+        border-right: 25px solid transparent;
+        height: 0;
+        width: 100px;
+        position: absolute;
+        left: -32px;
+      }
+      .piece {
+        background-color: red;
+        height: 15.2%;
+        width: 13%;
+        position: absolute;
+        border-radius: 50%;
+        bottom: 200%;
+        z-index: -10;
+        aspect-ratio: 1124/1320;
+    } 
+    .column0 {
+      left: .8%;
+    }
+    .column1 {
+      left: 15%;
+    }
+    .column2 {
+      left: 29.3%;
+    }
+    .column3 {
+      left: 43.5%;
+    }
+    .column4 {
+      left: 57.6%;
+    }
+    .column5 {
+      left: 72%;
+    }
+    .column6 {
+      left: 86%;
+    }
+    .drop0 {
+      bottom: .8%;
+      transition: bottom .5s cubic-bezier(.47,1.64,.41,.8);
+    }
+    .drop1 {
+      bottom: 17%;
+      transition: bottom .5s cubic-bezier(.47,1.64,.41,.8);
+    }
+    .drop2 {
+      bottom: 34%;
+      transition: bottom .5s cubic-bezier(.47,1.64,.41,.8);
+    }
+    .drop3 {
+      bottom: 50.5%;
+      transition: bottom .5s cubic-bezier(.47,1.64,.41,.8);
+    }
+    .drop4 {
+      bottom: 67.5%;
+      transition: bottom .5s cubic-bezier(.47,1.64,.41,.8);
+    }
+    .drop5 {
+      bottom: 84%;
+      transition: bottom .5s cubic-bezier(.47,1.64,.41,.8);
+    }
+    .empty {
+      bottom: -100%;
+      transition: bottom 1.5s cubic-bezier(.47,1.64,.41,.8);
     }
 
     </style>
   </head>
   <body>
+    
     <main>
       <header>
         <!-- Button to Open Modal -->
@@ -250,6 +311,7 @@
       </div>
       <<div class="container text-center">
         <a href="./index.html"><button id="homePage">Home Page</button></a>
+        <button id="undo-game-button">Undo</button>
       </<div>
     </main>
 

@@ -38,9 +38,12 @@ function clearGameBoard(xColumns, yRows) {
   // set all gameboard token slots to white
   for (let columnIndex = 0; columnIndex < xColumns; columnIndex++) {
     for (let rowIndex = 0; rowIndex < yRows; rowIndex++) {
-      document
-        .getElementById(`_${columnIndex}-${rowIndex}`)
-        .setAttribute("style", `background-color:white`);
+      // document
+      //   .getElementById(`_${columnIndex}-${rowIndex}`)
+      //   .setAttribute("style", `background-color:white`);
+      // document
+      //   .getElementById(`_${columnIndex}-${rowIndex}`)
+      //   .setAttribute("style", `clip-path: circle(50px at 50% 50%)`);
     }
   }
   return newArray;
@@ -81,19 +84,21 @@ function checkValidMove(selectedColumn) {
 // set selected row and column token to current player preferred color
 function dropToken(playerNumber, selectedColumn, selectedRow) {
   if (playerNumber == 1) {
-    document
-      .getElementById(`_${selectedColumn}-${selectedRow}`)
-      .setAttribute(
-        "style",
-        `background-color:${playerOneColor}; color:${playerOneColor}`
-      );
+    let token = document.createElement("div");
+    token.setAttribute("style", `background-color: ${playerOneColor}`);
+    token.classList.add("piece", `column${selectedColumn}`);
+    document.getElementById("gameboard").appendChild(token);
+    setTimeout(function () {
+      token.classList.add(`drop${selectedRow}`);
+    }, 100);
   } else if (playerNumber == 2) {
-    document
-      .getElementById(`_${selectedColumn}-${selectedRow}`)
-      .setAttribute(
-        "style",
-        `background-color:${playerTwoColor}; color:${playerTwoColor}`
-      );
+    let token = document.createElement("div");
+    token.setAttribute("style", `background-color: ${playerTwoColor}`);
+    token.classList.add("piece", `column${selectedColumn}`);
+    document.getElementById("gameboard").appendChild(token);
+    setTimeout(function () {
+      token.classList.add(`drop${selectedRow}`);
+    }, 100);
   }
   return true;
 }
@@ -233,6 +238,12 @@ function resetGame() {
     /***  DO WE REALLY WANT TO CLEAR THE PLAYERS OBJECT? ***/
     if (confirm("Click OK to reset player information") === true) {
       // localStorage.clear();
+      setTimeout(function () {
+        document.querySelectorAll(".piece").forEach((element) => {
+          element.classList.add("empty");
+        });
+        // document.querySelectorAll(".piece").classList.add("empty");
+      }, 100);
     }
     gameMessage.textContent = "Ready for a new game!";
   }
