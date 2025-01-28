@@ -217,7 +217,8 @@
   #homePage,
   #start-game-button,
   #settings-game-button,
-  #reset-game-button {
+  #reset-game-button,
+  #begin-game-button {
     margin: 20px;
     padding: 10px 20px;
     font-size: 18px;

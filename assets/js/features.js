@@ -1,55 +1,41 @@
 // This Javascript file is used for extra features in the game so that the main gameplay file is not cluttered and so that we can work asynchronosly on different features without merge.
 
-
 let players = [
-    {
-        playerName: "[None]",
-        wins: 0,
-        losses: 0,
-        ties: 0,
-        quits: 0,
-        saveState: "",
-        preferredColor: "red",
-        turnNumber: 1,
-        gamepieceImage: "url",
-    }
-  ];
-console.log("Players init:",players);
+  {
+    playerName: "None",
+    wins: 0,
+    losses: 0,
+    ties: 0,
+    quits: 0,
+    saveState: "",
+    preferredColor: "red",
+    turnNumber: 1,
+    gamepieceImage: "url",
+  },
+];
+console.log("Players init:", players);
 
 //Build players from local storage if they exist, otherwise create default players and save to local storage.
 buildPlayersFromStorage();
 
 // TODO: Create a function called `renderBlogList` that renders the list of blog posts if they exist. If not, call the no posts function.
 function buildPlayersFromStorage() {
-    if (localStorage.getItem('playerData')) {
-        players = JSON.parse(localStorage.getItem('playerData'));
-        console.log("Players loaded:",players);
-    } else {
-        localStorage.setItem('playerData', JSON.stringify(players));
-    }
+  if (localStorage.getItem("playerData")) {
+    players = JSON.parse(localStorage.getItem("playerData"));
+    console.log("Players loaded:", players);
+  } else {
+    localStorage.setItem("playerData", JSON.stringify(players));
+  }
 
-
-      // } else {
-      //       for (let player = 0; player < players.length; player++) {
-      //         //Useful for LeaderBoard
-      //           // buildElement('h2', posts[player].username, 'username');
-      //           // buildElement('h4', posts[player].title, 'title');
-      //           // buildElement('p', posts[player].content, 'content');
-      //       }
-      //   };
-    }
-
-
-
-
-
-
-
-
-
-
-
-
+  // } else {
+  //       for (let player = 0; player < players.length; player++) {
+  //         //Useful for LeaderBoard
+  //           // buildElement('h2', posts[player].username, 'username');
+  //           // buildElement('h4', posts[player].title, 'title');
+  //           // buildElement('p', posts[player].content, 'content');
+  //       }
+  //   };
+}
 
 // Mouseover
 // const dropzoneEl = document.querySelector(".dropzone");
@@ -85,5 +71,3 @@ function buildPlayersFromStorage() {
 
 //     document.body.appendChild(cursorHand)
 // }
-
-

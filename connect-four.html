@@ -11,55 +11,117 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Honk&family=Nabla&display=swap" rel="stylesheet">
     <style>
       body {
         height: 100vh;
         width: 100vw;
+      }
+      main {
+        
         display: flex;
         flex-direction: column;
         justify-content: center;
       }
+      header {
+      text-align: center; 
+      margin: auto; 
+      }
+      header > h1 {
+      font-family: "Nabla", serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-size: 4em;
+      font-style: normal;
+      font-variation-settings:
+        "EDPT" 140,
+        "EHLT" 12;
+      }
+      .game-message{
+      /* from fonts.google.com */
+      font-family: "Honk", serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+      font-variation-settings:
+        "MORF" 15,
+        "SHLN" 50;
+      }
+      .gameboardContainer {
+        margin: 20px;
+      }
+      #gameboard {
+        position:relative;
+        border: 10px solid #1417C4;
+        border-radius: 10px;
 
+      }
       .row {
-        background-color: blue;
-        height: calc();
+        background: linear-gradient(135deg, #1417C4 25%, #373deb 25%, #373deb 50%, #1417C4 50%, #1417C4 75%, #373deb 75%);
+        background-size: 20px 20px;      
       }
       .row > * {
         aspect-ratio: 1/1;
         border: 2px solid blue;
         border-radius: 50% 50% 50% 50%;
         margin: 1%;
+        
       }
+      #left-leg {
+      /* https://css-tricks.com/the-shapes-of-css/ */
+      border-bottom: 100px solid #1417C4;
+      border-left: 25px solid transparent;
+      border-right: 25px solid transparent;
+      height: 0;
+      width: 100px;
+      position: absolute;
+      right: -32px;
+    }
+      #right-leg {
+      /* https://css-tricks.com/the-shapes-of-css/ */
+      border-bottom: 100px solid #1417C4;
+      border-left: 25px solid transparent;
+      border-right: 25px solid transparent;
+      height: 0;
+      width: 100px;
+      position: absolute;
+      left: -32px;
+    }
+
     </style>
   </head>
   <body>
     <main>
-      <div class="container text-center">
-        <h1>Array of Sunshine</h1>
-        <!-- <button class="button" id="start-game-button">Start</button> -->
-
+      <header>
         <!-- Button to Open Modal -->
+        <h1>Array of Sunshine</h1>
         <button
-          type="button"
-          class="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#startGameModal"
+        type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#startGameModal"
+        id="begin-game-button"
         >
         Start Game
-        </button>
-
+      </button>
+      <button class="button" id="settings-game-button">Settings</button>
+      <button class="button" id="reset-game-button">Reset</button>
+      </header>
+      <div class="container text-center">
         <!-- Modal -->
         <div class="modal fade" id="startGameModal" tabindex="-1" aria-labelledby="startGameModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="startGameModalLabel">Add Name and Select Color</h5>
-                <button
+                <!-- <button
                   type="button"
                   class="btn-close"
                   data-bs-dismiss="modal"
                   aria-label="Close"
-                ></button>
+                ></button> -->
               </div>
               <br>
               <div class="modal-body">
@@ -109,7 +171,6 @@
                   </div>
                 </form>
               </div>
-              
               <div class="modal-footer">
                 <!-- <button
                   type="button"
@@ -124,8 +185,6 @@
           </div>
         </div>
 
-        <button class="button" id="settings-game-button">Settings</button>
-        <button class="button" id="reset-game-button">Reset</button>
       </div>
       <div class="game-message">Game Messages</div>
       <div class="dropzone"></div>
@@ -185,6 +244,8 @@
             <div class="col" id="_5-0">5,0</div>
             <div class="col" id="_6-0">6,0</div>
           </div>
+          <div id="left-leg"></div>
+          <div id="right-leg"></div>
         </div>
       </div>
       <<div class="container text-center">
