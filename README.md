@@ -41,35 +41,33 @@ What are the steps required to install your project? Provide a step-by-step desc
 
 When you're ready to play, simply press the "Play Now" button on the homescreen, where you will be taken to the empty gameboard.
 
-Upon initial gameplay, the system will prompt your for the players' names, so that it can address each of you by name and help you understand 
+Upon initial gameplay, the system will prompt your for the players' names, so that it can address each of you by name and help you understand whose turn it is.
 
 
 ## Credits
 
-The project's collaborators each have a bio written on the .\about.html page, which can be found by clicking About on the Home page (index.html)
+This code was written by the following individuals:
 
+- Ryan Gayle
+- Stuart Gross
+- Jonathan Hummer
+- Sheikh Iftekhar
 
+Major props to Google, and w2 Schools, and Stack Overflow for support.
+
+Additional Support from our instructors and teaching assistants at Columbia University:
+
+- Rich Hosek
+- Max Ohsawa
+- Jeremy
 
 
 
 ## License
 
-The last section of a high-quality README file is the license. This lets other developers know what they can and cannot do with your project. If you need help choosing a license, refer to [https://choosealicense.com/](https://choosealicense.com/).
-
----
-
-🏆 The previous sections are the bare minimum, and your project will ultimately determine the content of this document. You might also want to consider adding the following sections.
+MIT License
 
 
 ## Features
 
 If your project has a lot of features, list them here.
-
-
-## How to Contribute
-
-If you created an application or package and would like other developers to contribute it, you can include guidelines for how to do so. The [Contributor Covenant](https://www.contributor-covenant.org/) is an industry standard, but you can always write your own if you'd prefer.
-
-## Tests
-
-Go the extra mile and write tests for your application. Then provide examples on how to run them here.
