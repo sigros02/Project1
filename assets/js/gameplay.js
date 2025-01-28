@@ -1,20 +1,30 @@
 // This Javascript file is used to handle the gameplay of the game.
 // It is responsible for the game logic, such as the player's location selection, win conditions, etc. It is also responsible for the game's UI, such as updating the game board, displaying messages, etc.
 
-let playerNumber;
+let playerNumber = 0;
 let playerOneID = 0;
 let playerTwoID = 0;
 let activeGame = false; //whether a game is enabled and/or in session
 let gameWon = false; //whether a player has won the game
-
-// Define the gameboard element and currently selected row and column
-const gameboardElement = document.querySelector("#gameboard");
-const startGameButton = document.querySelector("#start-game-button");
-const resetGameButton = document.querySelector("#reset-game-button");
-const gameMessage = document.querySelector(".game-message");
+let lastMove = [0,0]  //last move played (for undo)
 
 let selectedColumn = 0;
 let selectedRow = 0;
+
+let players = [
+  {
+    playerName: "None",
+    wins: 0,
+    losses: 0,
+    ties: 0,
+    quits: 0,
+    gamesPlayed: 0,
+    saveState: "",
+    preferredColor: "red",
+    turnNumber: 1,
+    gamepieceImage: "url",
+  },
+];
 
 // Define the number of columns and rows in the game (allows for gameboard to be a dynamic size if wanted in the future)
 const xColumns = 7; // 7 columns
@@ -23,9 +33,38 @@ const straightForWin = 4; // 4 tokens in a row to win
 const randomStartTokensMin = 15; // Minimum of random number of tokens to start
 const randomStartTokensMax = 25; // Maximum of random number of tokens to start
 
-// false represents an empty space, true represents a player's game piece
-let gameBoard = clearGameBoard(xColumns, yRows);
+// Define the gameboard element and currently selected row and column
+const gameboardElement = document.querySelector("#gameboard");
+const startGameButton = document.querySelector("#start-game-button");
+const settingsGameButton = document.querySelector("#settings-game-button");
+const resetGameButton = document.querySelector("#reset-game-button");
+const undoGameButton = document.querySelector("#undo-game-button");
+const gameMessage = document.querySelector(".game-message");
 
+gameboardElement.addEventListener("click", playerChooseColumn);
+// startGameButton.addEventListener("click", startGame);
+// settingsGameButton.addEventListener("click", settingsModal);
+settingsGameButton.className += " disabled";
+resetGameButton.addEventListener("click", resetGame);
+// undoGameButton.addEventListener("click", undoMove);
+
+//Build players from local storage if they exist, otherwise create default players and save to local storage.
+buildPlayersFromStorage();
+function buildPlayersFromStorage() {
+  if (localStorage.getItem("playerData")) {
+    players = JSON.parse(localStorage.getItem("playerData"));
+    console.log("Players loaded:", players);
+  } else {
+    localStorage.setItem("playerData", JSON.stringify(players));
+    console.log("Players init:", players);
+  }
+}
+function savePlayersToStorage() {
+  localStorage.setItem("playerData", JSON.stringify(players));
+  console.log("Players saved:", players);
+}
+
+let gameBoard = clearGameBoard(xColumns, yRows);
 // Create a 2D array to represent the game board of size xColumns by yRows
 function clearGameBoard(xColumns, yRows) {
   let newArray = [];
@@ -52,6 +91,8 @@ function playerChooseColumn(event) {
     // parse clicked row and column from selector ID
     selectedColumn = event.target.id.slice(1, 2);
     checkValidMove(selectedColumn);
+  } else if (!activeGame) {
+    alert("Please select [Start Game] to start a new game!");
   }
 }
 
@@ -66,6 +107,7 @@ function checkValidMove(selectedColumn) {
       gameBoard[selectedColumn][rowNumber] = playerNumber;
       // console.log("Player", playerNumber, "placed token in: column", selectedColumn, "row", rowNumber);
       dropToken(playerNumber, selectedColumn, rowNumber);
+      lastMove = [selectedColumn, rowNumber];
       // checkForWin(playerNumber, selectedColumn, rowNumber);
       setTimeout(checkForWin, 100, playerNumber, selectedColumn, rowNumber);
       togglePlayer();
@@ -78,8 +120,19 @@ function checkValidMove(selectedColumn) {
   }
 }
 
+function undoMove() {
+  gameBoard[lastMove[0]][lastMove[1]] = 0;
+  document
+    .getElementById(`_${lastMove[0]}-${lastMove[1]}`)
+    .setAttribute("style", `background-color:white; color:white`);
+  togglePlayer();
+}
+
 // set selected row and column token to current player preferred color
 function dropToken(playerNumber, selectedColumn, selectedRow) {
+  
+  // This is where we need to add in the animation for the token dropping
+  
   if (playerNumber == 1) {
     document
       .getElementById(`_${selectedColumn}-${selectedRow}`)
@@ -101,83 +154,41 @@ function dropToken(playerNumber, selectedColumn, selectedRow) {
 // Check if the player has won the game
 function checkForWin(playerNumber, selectedColumn, rowNumber) {
   let winCondition = (playerNumber + "").repeat(straightForWin);
-  // console.log("winCondition", winCondition);
-  // Check for horizonal win
+  // Horizontal 
   let horizontalString = "";
   for (let numberOfColumns = 0; numberOfColumns < xColumns; numberOfColumns++) {
     horizontalString += gameBoard[numberOfColumns][rowNumber];
   }
-  console.log("horizontalString", horizontalString);
-  if (horizontalString.includes(winCondition)) {
-    gameWon = true;
-    rowNumber = +rowNumber;
-    winCondition =
-      "Player " +
-      playerNumber +
-      " wins with a horizonal win in row number " +
-      rowNumber +
-      "! Press OK to reset the game.";
-  }
-  // Check for vertical win
+  // Vertical
   let verticalString = gameBoard[selectedColumn].join("");
-  console.log("verticalString", verticalString);
-  if (verticalString.includes(winCondition)) {
-    gameWon = true;
-    selectedColumn = +selectedColumn;
-    winCondition =
-      "Player " +
-      playerNumber +
-      " wins with a vertical win in columns number " +
-      selectedColumn +
-      "! Press OK to reset the game.";
-  }
-  //check for diagonal wins - primary diagonal (up to the right) array
+  // Diagonal Up (to the right)
   let primaryDiagonalArray = [gameBoard[selectedColumn][rowNumber]];
   let rowIndexToAdd = rowNumber;
   let columnIndexToAdd = selectedColumn;
-  //while current row is less than last row AND current column is less last column
   while (rowIndexToAdd < yRows - 1 && columnIndexToAdd < xColumns - 1) {
-    //increment row and column indices
     rowIndexToAdd++;
     columnIndexToAdd++;
-    //push current value into primary diagonal array
     primaryDiagonalArray.push(gameBoard[columnIndexToAdd][rowIndexToAdd]);
   }
   rowIndexToAdd = rowNumber;
   columnIndexToAdd = selectedColumn;
-  //while current row is greater than zero AND current column is greater zero
   while (rowIndexToAdd > 0 && columnIndexToAdd > 0) {
-    //decrement row and column indices
     rowIndexToAdd--;
     columnIndexToAdd--;
-    //unshift current value into primary diagonal array
     primaryDiagonalArray.unshift(gameBoard[columnIndexToAdd][rowIndexToAdd]);
   }
-  // console.log("primary diagonal: ", primaryDiagonalArray);
-  if (primaryDiagonalArray.join("").includes(winCondition)) {
-    gameWon = true;
-    winCondition =
-      "Player " +
-      playerNumber +
-      " wins with a primary diagonal win " +
-      rowNumber +
-      "! Press OK to reset the game.";
-  }
-  //define secondary diagonal (up to the left) array
+  primaryDiagonalArray = primaryDiagonalArray.join("");
+  // Diagonal Down (from the left)
   let secondaryDiagonalArray = [gameBoard[selectedColumn][rowNumber]];
   rowIndexToAdd = rowNumber;
   columnIndexToAdd = selectedColumn;
-  //while current row is greater than zero AND current column is less last column
   while (rowIndexToAdd > 0 && columnIndexToAdd < xColumns - 1) {
-    //increment row and column indices
     rowIndexToAdd--;
     columnIndexToAdd++;
-    //push current value into primary diagonal array
     secondaryDiagonalArray.push(gameBoard[columnIndexToAdd][rowIndexToAdd]);
   }
   rowIndexToAdd = rowNumber;
   columnIndexToAdd = selectedColumn;
-  //while current row is less than last row AND current column is greater than zero
   while (rowIndexToAdd < yRows - 1 && columnIndexToAdd > 0) {
     //decrement row and column indices
     rowIndexToAdd++;
@@ -185,21 +196,63 @@ function checkForWin(playerNumber, selectedColumn, rowNumber) {
     //unshift current value into primary diagonal array
     secondaryDiagonalArray.unshift(gameBoard[columnIndexToAdd][rowIndexToAdd]);
   }
+  secondaryDiagonalArray = secondaryDiagonalArray.join("");
+  // console.log("winCondition", winCondition);
+  // console.log("horizontalString", horizontalString);
+  // console.log("verticalString", verticalString);
+  // console.log("primary diagonal: ", primaryDiagonalArray);
   // console.log("secondary diagonal: ", secondaryDiagonalArray);
-
-  if (secondaryDiagonalArray.join("").includes(winCondition)) {
+  if (horizontalString.includes(winCondition)) {
     gameWon = true;
-    winCondition =
-      "Player " +
-      playerNumber +
-      " wins with a secondary diagonal win " +
-      rowNumber +
-      "! Press OK to reset the game.";
+    rowNumber++
+    if (playerNumber == 1) {
+      winCondition = players[playerOneID].playerName + " wins with a horizontal straight in row #" + rowNumber + "!";
+    } else {
+      winCondition = players[playerTwoID].playerName + " wins with a horizontal straight in row #" + rowNumber + "!";
+    }
+  } else if (rowNumber == 5 && !horizontalString.includes(0)) {
+      activeGame = false;
+      players[playerOneID].ties++;
+      players[playerTwoID].ties++;
+      if (confirm("Cat's game! Press OK to reset the game.") === true) {
+        resetGame();    
+      }
+  } else if (verticalString.includes(winCondition)) {
+    gameWon = true;
+    selectedColumn++
+    if (playerNumber == 1) {
+      winCondition = players[playerOneID].playerName + " wins with a vertical straight in column #" + selectedColumn + "!";
+    } else {
+      winCondition = players[playerTwoID].playerName + " wins with a vertical straight in column #" + selectedColumn + "!";
+    }
+  } else if (primaryDiagonalArray.includes(winCondition)) {
+    gameWon = true;
+    if (playerNumber == 1) {
+      winCondition = players[playerOneID].playerName + " wins with a primary diagonal win!";
+    } else {
+      winCondition = players[playerTwoID].playerName + " wins with a primary diagonal win!";
+    }
+  } else if (secondaryDiagonalArray.includes(winCondition)) {
+    gameWon = true;
+    if (playerNumber == 1) {
+      winCondition = players[playerOneID].playerName + " wins with a secondary diagonal win!";
+    } else {
+      winCondition = players[playerTwoID].playerName + " wins with a secondary diagonal win!";
+    }
   }
 
   if (gameWon === true) {
     console.log("Player", playerNumber, "wins with a", winCondition, "win!");
+    if (playerNumber == 1) {
+      players[playerOneID].wins++;
+      players[playerTwoID].losses++;
+    } else {
+      players[playerOneID].losses++;
+      players[playerTwoID].wins++;
+    }
+    savePlayersToStorage();
     alert(winCondition);
+    activeGame = false;
     return gameWon;
   }
 }
@@ -215,26 +268,36 @@ function togglePlayer() {
   }
 }
 
-// check for a gameboard click event
-gameboardElement.addEventListener("click", playerChooseColumn);
-// startGameButton.addEventListener("click", startGame);
-// settingsGameButton.addEventListener("click", settingsModal);
-resetGameButton.addEventListener("click", resetGame);
-
 function resetGame() {
   if (
     confirm("Press OK to reset the game, or Cancel to continue playing") ===
     true
   ) {
-    playerNumber = 1;
+    if (activeGame == true) {
+      players[playerOneID].quits++;
+      players[playerTwoID].quits++;
+    }
+    if (players[playerOneID].turnNumber = 1) {
+      players[playerTwoID].turnNumber = 1;
+      players[playerOneID].turnNumber = 2;
+      playerNumber = 2;
+    } else {
+      players[playerOneID].turnNumber = 1;
+      players[playerTwoID].turnNumber = 2;
+      playerNumber = 1;
+    }
+    savePlayersToStorage();
     gameWon = false;
     gameBoard = clearGameBoard(xColumns, yRows);
-
-    /***  DO WE REALLY WANT TO CLEAR THE PLAYERS OBJECT? ***/
-    if (confirm("Click OK to reset player information") === true) {
-      // localStorage.clear();
-    }
     gameMessage.textContent = "Ready for a new game!";
+    activeGame = true;
+    if (confirm("Click Cancel to enter new player information or OK to continue with current players") === false || playerOneID == 0 || playerTwoID == 0) {
+      playerOneID = 0;
+      playerTwoID = 0;
+      bootstrap.Modal.getInstance("#startGameModal").show();
+    } else {
+      startGame();
+    }
   }
 }
 
@@ -277,6 +340,7 @@ submitButton.addEventListener("click", () => {
       playerOneName.toUpperCase()
     ) {
       playerOneID = playersIndex;
+      console.log("Player One ID", playerOneID);
       players[playersIndex].preferredColor = playerOneColor;
       players[playersIndex].turnNumber = 1;
       // break;
@@ -286,6 +350,7 @@ submitButton.addEventListener("click", () => {
       playerTwoName.toUpperCase()
     ) {
       playerTwoID = playersIndex;
+      console.log("Player Two ID", playerTwoID);
       players[playersIndex].preferredColor = playerTwoColor;
       players[playersIndex].turnNumber = 2;
       // break;
@@ -297,6 +362,11 @@ submitButton.addEventListener("click", () => {
       playerName: playerOneName,
       preferredColor: playerOneColor,
       turnNumber: 1,
+      wins: 0,
+      losses: 0,
+      ties: 0,
+      quits: 0,
+      gamesPlayed: 0
     });
     playerOneID = players.length - 1;
   }
@@ -305,17 +375,21 @@ submitButton.addEventListener("click", () => {
       playerName: playerTwoName,
       preferredColor: playerTwoColor,
       turnNumber: 2,
+      wins: 0,
+      losses: 0,
+      ties: 0,
+      quits: 0,
+      gamesPlayed: 0
     });
     playerTwoID = players.length - 1;
   }
-  localStorage.setItem("playerData", JSON.stringify(players));
-  console.log("Players submit", players);
+  savePlayersToStorage();
 
   // Clear form and close modal
-  nameInput1.value = "";
-  colorSelect1.value = "";
-  nameInput2.value = "";
-  colorSelect2.value = "";
+  // nameInput1.value = "";
+  // colorSelect1.value = "";
+  // nameInput2.value = "";
+  // colorSelect2.value = "";
 
   bootstrap.Modal.getInstance("#startGameModal").hide();
   startGame();
@@ -323,6 +397,14 @@ submitButton.addEventListener("click", () => {
 
 function startGame() {
   activeGame = true;
-  playerNumber = 1;
-  gameMessage.textContent = `Welcome to Array of Sunshine, ${playerOneName} and ${playerTwoName}! ${playerOneName}, you go first!`;
-}
+  if (players[playerOneID].turnNumber == 1) {
+    playerNumber = 1;
+    gameMessage.textContent = `Welcome to Array of Sunshine, ${playerOneName} and ${playerTwoName}! ${playerOneName}, you go first!`;
+  } else {
+    playerNumber = 2;
+    gameMessage.textContent = `Welcome to Array of Sunshine, ${playerTwoName} and ${playerOneName}! ${playerTwoName}, you go first!`;
+  }
+  players[playerOneID].gamesPlayed++;
+  players[playerTwoID].gamesPlayed++;
+  savePlayersToStorage();
+};

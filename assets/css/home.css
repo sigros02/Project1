@@ -60,18 +60,7 @@
     font-size: 18px;
     line-height: 1.5;
   }
-  
-  #startGame {
-    padding: 10px 20px;
-    font-size: 18px;
-    border: none;
-    border-radius: 5px;
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
+
   #startGame:hover {
     background-color: #45a049;
   }
