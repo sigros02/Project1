@@ -4,16 +4,6 @@
   box-sizing: border-box;
 }
 
-<<<<<<< HEAD
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background-color: #f7f7f7;
-  color: #333;
-  cursor: url("https://cdn1.iconfinder.com/data/icons/touch-gestures-2/24/One-Finger-512.png"),
-    auto;
-}
-=======
   .disabled {
     pointer-events: none;
     cursor: not-allowed;
@@ -72,7 +62,6 @@ body {
     font-size: 24px;
     line-height: 1.5;
   }
->>>>>>> 5a25e90d530e47581cc32777b7ceacc3213c8f4c
 
 .header {
   display: flex;
@@ -273,43 +262,24 @@ body {
   }
 }
 
-<<<<<<< HEAD
-#startGame,
-#homePage,
-#start-game-button,
-#settings-game-button,
-#reset-game-button,
-#begin-game-button,
-#undo-game-button {
-  margin: 20px;
-  padding: 10px 20px;
-  font-size: 18px;
-  border: none;
-  border-radius: 5px;
-  background-color: #4caf50;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-=======
-/* 
-  #homePage, {
-    margin: 20px;
-    padding: 10px 20px;
-    font-size: 18px;
-    border: none;
-    border-radius: 5px;
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
 
-   */
+  #startGame,
+  #homePage {
+      margin: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+  
   .dropzone {
     background-color: brown;
   }
->>>>>>> 5a25e90d530e47581cc32777b7ceacc3213c8f4c
 
 .dropzone {
   background-color: brown;
@@ -325,11 +295,6 @@ body {
   color: transparent;
 }
 
-<<<<<<< HEAD
-#startGame:hover {
-  background-color: #45a049;
-}
-=======
   .pushable {
     background-color: #45a049;
     background: hsl(118, 88%, 27%);
@@ -354,4 +319,3 @@ body {
   }
   
   
->>>>>>> 5a25e90d530e47581cc32777b7ceacc3213c8f4c

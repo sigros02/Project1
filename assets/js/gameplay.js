@@ -85,6 +85,12 @@ function clearGameBoard(xColumns, yRows) {
       //   .setAttribute("style", `clip-path: circle(50px at 50% 50%)`);
     }
   }
+  setTimeout(function () {
+    document.querySelectorAll(".piece").forEach((element) => {
+      element.classList.add("empty");
+    });
+    // document.querySelectorAll(".piece").classList.add("empty");
+  }, 100);
   return newArray;
 }
 
@@ -294,20 +300,7 @@ function resetGame() {
     savePlayersToStorage();
     gameWon = false;
     gameBoard = clearGameBoard(xColumns, yRows);
-<<<<<<< HEAD
 
-    /***  DO WE REALLY WANT TO CLEAR THE PLAYERS OBJECT? ***/
-    if (confirm("Click OK to reset player information") === true) {
-      // localStorage.clear();
-      setTimeout(function () {
-        document.querySelectorAll(".piece").forEach((element) => {
-          element.classList.add("empty");
-        });
-        // document.querySelectorAll(".piece").classList.add("empty");
-      }, 100);
-    }
-=======
->>>>>>> 5a25e90d530e47581cc32777b7ceacc3213c8f4c
     gameMessage.textContent = "Ready for a new game!";
     activeGame = true;
     if (confirm("Click Cancel to enter new player information or OK to continue with current players") === false || playerOneID == 0 || playerTwoID == 0) {
