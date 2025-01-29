@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+#center {
+  align-items: center;
+}
+
   .disabled {
     pointer-events: none;
     cursor: not-allowed;
@@ -50,6 +54,7 @@
   
   .openPage {
     padding: 20px;
+    justify-items: center;
   }
   
   .openPage h2 {
@@ -139,6 +144,7 @@
   font-style: italic;
   /* font-family: Impact, monospace, Arial, sans-serif; */
   animation: grow 4s infinite;
+  justify-self: center;
 }
 
 @keyframes grow {
