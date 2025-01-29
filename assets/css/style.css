@@ -84,6 +84,26 @@
   
   /* animation classes and ids */
 
+  .cut-out {
+    width: 160px;
+    height: 160px;
+    background-color: green;
+    /* clip-path: circle(70px at 50% 50%); Cuts out a 50px circle centered in the div */
+    background: radial-gradient(circle at center, transparent 50px, blue 50px);
+    position: relative;
+   }
+
+   .piece {
+    width: 160px;
+    height: 160px;
+    background-color: green;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 3%;
+    left: 2%;
+    z-index: -10;
+  }
+
   #animatetext {
     font-size: 30px;
     line-height: 1.5;

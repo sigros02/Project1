@@ -92,6 +92,11 @@
     color: #555;
   }
   
+  .team-member:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+    background-color: lightgray;
+  }
 
   @media (max-width: 768px) {
     .team-container {
