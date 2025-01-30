@@ -14,9 +14,10 @@ On the surface, a simple game of four-in-a-row seems like an easy exercise. Howe
 
 - <b>Google is your friend</b>. With a basic understanding of the syntax and use of your respective languages, you can start to utilize code provided by others on Google to get an example of what you might be trying to achieve. You don't need to have an encyclopedic memory of all of the methods to be able to recall and use them!
 
-- <b>Learning #3</b>. And a short description of the Learning.
+- <b>Communication is KEY</b>. It's important to communicate with your team 
+what you're currently working on in the project. Often what happens is more than one teammate may be working on the same HTML, CSS, or Javascript file, and only one teammate's code will be used. Communication helps to delegate tasks efficiently and ensures that all teammates are working on different aspects of the project.
 
-- <b>Learning #4</b>. And a short description of the Learning.
+- <b>Make sure your MVPs are complete</b>. Sometimes as programmers, we get excited about adding cool features to projects that would make the project pop out more. In order to add those cool features, you have to make sure that you have a working product first. Without a working product, features are useless.
 
 - <b>Learning #5</b>. And a short description of the Learning.
 
@@ -41,35 +42,35 @@ What are the steps required to install your project? Provide a step-by-step desc
 
 When you're ready to play, simply press the "Play Now" button on the homescreen, where you will be taken to the empty gameboard.
 
-Upon initial gameplay, the system will prompt your for the players' names, so that it can address each of you by name and help you understand 
+Upon initial gameplay, the system will prompt your for the players' names, so that it can address each of you by name and help you understand whose turn it is.
 
 
 ## Credits
 
-The project's collaborators each have a bio written on the .\about.html page, which can be found by clicking About on the Home page (index.html)
+This code was written by the following individuals:
 
+- Ryan Gayle
+- Stuart Gross
+- Jonathan Hummer
+- Sheikh Iftekhar
 
+Major props to Google, and w2 Schools, and Stack Overflow for support.
+
+Additional Support from our instructors and teaching assistants at Columbia University:
+
+- Rich Hosek
+- Max Ohsawa
+- Jeremy
 
 
 
 ## License
 
-The last section of a high-quality README file is the license. This lets other developers know what they can and cannot do with your project. If you need help choosing a license, refer to [https://choosealicense.com/](https://choosealicense.com/).
-
----
-
-🏆 The previous sections are the bare minimum, and your project will ultimately determine the content of this document. You might also want to consider adding the following sections.
+MIT License
 
 
 ## Features
 
-If your project has a lot of features, list them here.
+- This project features cool animations such as the pieces dropping into the Array of Sunshine gameboard. The pieces bouncing once it hits the bottom of the board or on top of another piece added realism to the game.
 
-
-## How to Contribute
-
-If you created an application or package and would like other developers to contribute it, you can include guidelines for how to do so. The [Contributor Covenant](https://www.contributor-covenant.org/) is an industry standard, but you can always write your own if you'd prefer.
-
-## Tests
-
-Go the extra mile and write tests for your application. Then provide examples on how to run them here.
+- Animations added to the homepage such as game pieces flying across the screen and growing text added a bit of flare that should excite visitors to play the game.
