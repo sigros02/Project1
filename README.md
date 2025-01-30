@@ -1,3 +1,5 @@
+https://p1t0-group-2.github.io/P1T2-Array-of-Sunshine/
+
 # Array of Sunshine
 
 A game where the object of the game is to connect four game tiles in a row, with each player alternating turns dropping a gamepiece into one of seven columns. A win can be four continguous tiles stacked vertically, horizontally, or diagonally. The architecture is designed to allow for matrices of different sizes and require a variable number of tokens "in a row" for a victory, but the defaults for all of them are a classic 7x6 matrix aiming for 4 in a row.
