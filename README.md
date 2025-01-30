@@ -14,9 +14,10 @@ On the surface, a simple game of four-in-a-row seems like an easy exercise. Howe
 
 - <b>Google is your friend</b>. With a basic understanding of the syntax and use of your respective languages, you can start to utilize code provided by others on Google to get an example of what you might be trying to achieve. You don't need to have an encyclopedic memory of all of the methods to be able to recall and use them!
 
-- <b>Learning #3</b>. And a short description of the Learning.
+- <b>Communication is KEY</b>. It's important to communicate with your team 
+what you're currently working on in the project. Often what happens is more than one teammate may be working on the same HTML, CSS, or Javascript file, and only one teammate's code will be used. Communication helps to delegate tasks efficiently and ensures that all teammates are working on different aspects of the project.
 
-- <b>Learning #4</b>. And a short description of the Learning.
+- <b>Make sure your MVPs are complete</b>. Sometimes as programmers, we get excited about adding cool features to projects that would make the project pop out more. In order to add those cool features, you have to make sure that you have a working product first. Without a working product, features are useless.
 
 - <b>Learning #5</b>. And a short description of the Learning.
 
@@ -70,4 +71,6 @@ MIT License
 
 ## Features
 
-If your project has a lot of features, list them here.
+- This project features cool animations such as the pieces dropping into the Array of Sunshine gameboard. The pieces bouncing once it hits the bottom of the board or on top of another piece added realism to the game.
+
+- Animations added to the homepage such as game pieces flying across the screen and growing text added a bit of flare that should excite visitors to play the game.
